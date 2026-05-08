@@ -1,0 +1,401 @@
+tables:
+  approval_matrix:
+    description: 'Auto-discovered table: approval_matrix'
+    synonyms: []
+    columns:
+      id:
+        type: integer
+        desc: 'Auto-discovered column: id'
+      min_amount:
+        type: decimal(15,2)
+        desc: 'Auto-discovered column: min_amount'
+      max_amount:
+        type: decimal(15,2)
+        desc: 'Auto-discovered column: max_amount'
+      approver_role:
+        type: text
+        desc: 'Auto-discovered column: approver_role'
+      approver_name:
+        type: text
+        desc: 'Auto-discovered column: approver_name'
+      approver_email:
+        type: text
+        desc: 'Auto-discovered column: approver_email'
+    relationships: []
+  companies:
+    description: 'Auto-discovered table: companies'
+    synonyms: ['client', 'buyer']
+    columns:
+      id:
+        type: integer
+        desc: 'Auto-discovered column: id'
+      name:
+        type: text
+        desc: 'Auto-discovered column: name'
+      gstin:
+        type: text
+        desc: 'Auto-discovered column: gstin'
+      pan:
+        type: text
+        desc: 'Auto-discovered column: pan'
+      state_code:
+        type: text
+        desc: 'Auto-discovered column: state_code'
+      city:
+        type: text
+        desc: 'Auto-discovered column: city'
+      is_buyer:
+        type: integer
+        desc: 'Auto-discovered column: is_buyer'
+    relationships: []
+  departments:
+    description: 'Auto-discovered table: departments'
+    synonyms: []
+    columns:
+      id:
+        type: integer
+        desc: 'Auto-discovered column: id'
+      company_id:
+        type: integer
+        desc: 'Auto-discovered column: company_id'
+      name:
+        type: text
+        desc: 'Auto-discovered column: name'
+      head_name:
+        type: text
+        desc: 'Auto-discovered column: head_name'
+      head_email:
+        type: text
+        desc: 'Auto-discovered column: head_email'
+      budget_annual:
+        type: decimal(15,2)
+        desc: 'Auto-discovered column: budget_annual'
+    relationships:
+    - table: companies
+      join: departments.company_id = companies.id
+  grn_line_items:
+    description: 'Auto-discovered table: grn_line_items'
+    synonyms: []
+    columns:
+      id:
+        type: integer
+        desc: 'Auto-discovered column: id'
+      grn_id:
+        type: integer
+        desc: 'Auto-discovered column: grn_id'
+      product_id:
+        type: integer
+        desc: 'Auto-discovered column: product_id'
+      po_line_item_id:
+        type: integer
+        desc: 'Auto-discovered column: po_line_item_id'
+      quantity_received:
+        type: decimal(10,2)
+        desc: 'Auto-discovered column: quantity_received'
+      quantity_rejected:
+        type: decimal(10,2)
+        desc: 'Auto-discovered column: quantity_rejected'
+      remarks:
+        type: text
+        desc: 'Auto-discovered column: remarks'
+    relationships:
+    - table: po_line_items
+      join: grn_line_items.po_line_item_id = po_line_items.id
+    - table: products
+      join: grn_line_items.product_id = products.id
+    - table: grns
+      join: grn_line_items.grn_id = grns.id
+  grns:
+    description: 'Auto-discovered table: grns'
+    synonyms: []
+    columns:
+      id:
+        type: integer
+        desc: 'Auto-discovered column: id'
+      grn_number:
+        type: text
+        desc: 'Auto-discovered column: grn_number'
+      po_id:
+        type: integer
+        desc: 'Auto-discovered column: po_id'
+      vendor_id:
+        type: integer
+        desc: 'Auto-discovered column: vendor_id'
+      grn_date:
+        type: date
+        desc: 'Auto-discovered column: grn_date'
+      received_by:
+        type: text
+        desc: 'Auto-discovered column: received_by'
+      status:
+        type: text
+        desc: 'Auto-discovered column: status'
+    relationships:
+    - table: vendors
+      join: grns.vendor_id = vendors.id
+    - table: purchase_orders
+      join: grns.po_id = purchase_orders.id
+  invoice_line_items:
+    description: 'Auto-discovered table: invoice_line_items'
+    synonyms: []
+    columns:
+      id:
+        type: integer
+        desc: 'Auto-discovered column: id'
+      invoice_id:
+        type: integer
+        desc: 'Auto-discovered column: invoice_id'
+      product_id:
+        type: integer
+        desc: 'Auto-discovered column: product_id'
+      description:
+        type: text
+        desc: 'Auto-discovered column: description'
+      hsn_code:
+        type: text
+        desc: 'Auto-discovered column: hsn_code'
+      quantity:
+        type: decimal(10,2)
+        desc: 'Auto-discovered column: quantity'
+      unit_rate:
+        type: decimal(12,2)
+        desc: 'Auto-discovered column: unit_rate'
+      total_amount:
+        type: decimal(15,2)
+        desc: 'Auto-discovered column: total_amount'
+      cgst:
+        type: decimal(10,2)
+        desc: 'Auto-discovered column: cgst'
+      sgst:
+        type: decimal(10,2)
+        desc: 'Auto-discovered column: sgst'
+      igst:
+        type: decimal(10,2)
+        desc: 'Auto-discovered column: igst'
+    relationships:
+    - table: products
+      join: invoice_line_items.product_id = products.id
+    - table: invoices
+      join: invoice_line_items.invoice_id = invoices.id
+  invoices:
+    description: 'Auto-discovered table: invoices'
+    synonyms: []
+    columns:
+      id:
+        type: integer
+        desc: 'Auto-discovered column: id'
+      invoice_number:
+        type: text
+        desc: 'Auto-discovered column: invoice_number'
+      vendor_id:
+        type: integer
+        desc: 'Auto-discovered column: vendor_id'
+      company_id:
+        type: integer
+        desc: 'Auto-discovered column: company_id'
+      po_id:
+        type: integer
+        desc: 'Auto-discovered column: po_id'
+      invoice_date:
+        type: date
+        desc: 'Auto-discovered column: invoice_date'
+      due_date:
+        type: date
+        desc: 'Auto-discovered column: due_date'
+      total_taxable_amount:
+        type: decimal(15,2)
+        desc: 'Auto-discovered column: total_taxable_amount'
+      total_tax:
+        type: decimal(15,2)
+        desc: 'Auto-discovered column: total_tax'
+      grand_total:
+        type: decimal(15,2)
+        desc: 'Auto-discovered column: grand_total'
+      currency:
+        type: text
+        desc: 'Auto-discovered column: currency'
+      status:
+        type: text
+        desc: 'Auto-discovered column: status'
+      deviation_type:
+        type: text
+        desc: 'Auto-discovered column: deviation_type'
+      deviation_details:
+        type: text
+        desc: 'Auto-discovered column: deviation_details'
+      approved_by:
+        type: text
+        desc: 'Auto-discovered column: approved_by'
+      approval_date:
+        type: date
+        desc: 'Auto-discovered column: approval_date'
+      created_at:
+        type: timestamp
+        desc: 'Auto-discovered column: created_at'
+    relationships:
+    - table: purchase_orders
+      join: invoices.po_id = purchase_orders.id
+    - table: companies
+      join: invoices.company_id = companies.id
+    - table: vendors
+      join: invoices.vendor_id = vendors.id
+  payments:
+    description: 'Auto-discovered table: payments'
+    synonyms: []
+    columns:
+      id:
+        type: integer
+        desc: 'Auto-discovered column: id'
+      invoice_id:
+        type: integer
+        desc: 'Auto-discovered column: invoice_id'
+      payment_date:
+        type: date
+        desc: 'Auto-discovered column: payment_date'
+      amount:
+        type: decimal(15,2)
+        desc: 'Auto-discovered column: amount'
+      payment_mode:
+        type: text
+        desc: 'Auto-discovered column: payment_mode'
+      reference_number:
+        type: text
+        desc: 'Auto-discovered column: reference_number'
+      bank_account:
+        type: text
+        desc: 'Auto-discovered column: bank_account'
+    relationships:
+    - table: invoices
+      join: payments.invoice_id = invoices.id
+  po_line_items:
+    description: 'Auto-discovered table: po_line_items'
+    synonyms: []
+    columns:
+      id:
+        type: integer
+        desc: 'Auto-discovered column: id'
+      po_id:
+        type: integer
+        desc: 'Auto-discovered column: po_id'
+      product_id:
+        type: integer
+        desc: 'Auto-discovered column: product_id'
+      quantity:
+        type: decimal(10,2)
+        desc: 'Auto-discovered column: quantity'
+      unit_rate:
+        type: decimal(12,2)
+        desc: 'Auto-discovered column: unit_rate'
+      total_amount:
+        type: decimal(15,2)
+        desc: 'Auto-discovered column: total_amount'
+      tax_rate:
+        type: decimal(5,2)
+        desc: 'Auto-discovered column: tax_rate'
+    relationships:
+    - table: products
+      join: po_line_items.product_id = products.id
+    - table: purchase_orders
+      join: po_line_items.po_id = purchase_orders.id
+  products:
+    description: 'Auto-discovered table: products'
+    synonyms: []
+    columns:
+      id:
+        type: integer
+        desc: 'Auto-discovered column: id'
+      code:
+        type: text
+        desc: 'Auto-discovered column: code'
+      name:
+        type: text
+        desc: 'Auto-discovered column: name'
+      category:
+        type: text
+        desc: 'Auto-discovered column: category'
+      hsn_code:
+        type: text
+        desc: 'Auto-discovered column: hsn_code'
+      unit:
+        type: text
+        desc: 'Auto-discovered column: unit'
+      standard_rate:
+        type: decimal(12,2)
+        desc: 'Auto-discovered column: standard_rate'
+    relationships: []
+  purchase_orders:
+    description: 'Auto-discovered table: purchase_orders'
+    synonyms: []
+    columns:
+      id:
+        type: integer
+        desc: 'Auto-discovered column: id'
+      po_number:
+        type: text
+        desc: 'Auto-discovered column: po_number'
+      company_id:
+        type: integer
+        desc: 'Auto-discovered column: company_id'
+      vendor_id:
+        type: integer
+        desc: 'Auto-discovered column: vendor_id'
+      department_id:
+        type: integer
+        desc: 'Auto-discovered column: department_id'
+      po_date:
+        type: date
+        desc: 'Auto-discovered column: po_date'
+      total_amount:
+        type: decimal(15,2)
+        desc: 'Auto-discovered column: total_amount'
+      status:
+        type: text
+        desc: 'Auto-discovered column: status'
+      approved_by:
+        type: text
+        desc: 'Auto-discovered column: approved_by'
+      created_at:
+        type: timestamp
+        desc: 'Auto-discovered column: created_at'
+    relationships:
+    - table: departments
+      join: purchase_orders.department_id = departments.id
+    - table: vendors
+      join: purchase_orders.vendor_id = vendors.id
+    - table: companies
+      join: purchase_orders.company_id = companies.id
+  vendors:
+    description: 'Auto-discovered table: vendors'
+    synonyms: ['supplier', 'suppliers']
+    columns:
+      id:
+        type: integer
+        desc: 'Auto-discovered column: id'
+      name:
+        type: text
+        desc: 'Auto-discovered column: name'
+      gstin:
+        type: text
+        desc: 'Auto-discovered column: gstin'
+      pan:
+        type: text
+        desc: 'Auto-discovered column: pan'
+      state_code:
+        type: text
+        desc: 'Auto-discovered column: state_code'
+      city:
+        type: text
+        desc: 'Auto-discovered column: city'
+      payment_terms_days:
+        type: integer
+        desc: 'Auto-discovered column: payment_terms_days'
+      is_watchlist:
+        type: integer
+        desc: 'Auto-discovered column: is_watchlist'
+      rating:
+        type: text
+        desc: 'Auto-discovered column: rating'
+      onboarded_date:
+        type: date
+        desc: 'Auto-discovered column: onboarded_date'
+    relationships: []
