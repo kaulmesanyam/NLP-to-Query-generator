@@ -1,7 +1,7 @@
 # Semantic Layer on a Database for NLP-to-Query Conversion
 
 ## Overview
-This repository contains a solution for **Semantic Layer on a Database for NLP-to-Query Conversion**.
+This repository contains a **Semantic Layer on a Database for NLP-to-Query Conversion**.
 The solution implements an AI-powered text-to-SQL assistant that allows business users to query their Accounts Payable (AP) data using natural language.
 
 ## Architecture
